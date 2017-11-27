@@ -1,5 +1,3 @@
-data/
-!data/weights/*
 *.app
 
 # Byte-compiled / optimized / DLL files
