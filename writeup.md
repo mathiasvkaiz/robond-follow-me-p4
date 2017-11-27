@@ -24,6 +24,8 @@ The goals / steps of this project are the following:
 [image4]: ./images/decoder_block.png "Decoder Code"
 [image5]: ./images/different_models.png "Model Architecture tries"
 [image6]: ./images/parameters.png "Model Parameters"
+[image7]: ./images/training.png "Training"
+[image8]: ./images/result.png "Result"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/1155/view) individually and describe how I addressed each point in my implementation.  
@@ -95,18 +97,26 @@ Following parametrs were chosen:
 Here i applied a brute force technique to find the correct parameters as well. First i changed the `steps_per_epoch` and `validation_steps` based on the total amount of test images and validation images divided by `batch_size`. As i used the given standard test and validation set i do not need to adjust this parameter. But in case a add some more data in future these both parameters need to be adjusted. Here a better solution could be applied in future meaning that a caluclation of the total amount of test and validation data will be done before. `Workers`are defined as processes in parallel. I changed it to 4 as i have the information that the AWS Cloud Instance can handle 4 processes in parallel. But this didn't lead to a significatnt calculation boost. The combination of `batch_size`, `learning_rate` and `num_epochs` was very hard to find out. I tried several different combinations. What got very clear to e was that a smaller batch size (like 32) lead to better results. All above that lead to worse results at least in the parameter scenarios i tried. `learning_rate` and `num_epochs` are linked together. A higher learning rate would result in less needed epochs but the risk of a too fast converging model would increase. This happend to me. So i tried from 100 epochs with very small learning rate to 10 epochs with higher learning rate many scenarios. Some were converging against 37% some were very bad. As the adjustment of `learning_rate` and `num_epochs` is dependend on given data and the wanted behaviour of the model a general advice cannot be given.
 
 
+All this lead to following result:
+![alt text][image7]
+![alt text][image8]
+
+
 #### Concepts in network layers
-However, when we wish to feed the output of a convolutional layer into a fully connected layer, we flatten it into a 2D tensor. This results in the loss of spatial information, because no information about the location of the pixels is preserved.
+Here i want to gove a brief summary when to use fully connected layers and 1x1 convolutions.
 
+AS described before the fully connected layers are used in Convolutional Neural Networks (CNN) to perform classification tasks on images like identifying a hand written digit and classifying the according character (A or B and so on). Image size matters for CNN as the size of the input is determined by the size of the fully connected layer. Also we flatten the 3D layers into a 2D tensor. 
 
-The 1x1 convolution is used here (instead of fully connected layer) as the 
-
-Image size matters for CNN as the size of the input is determined by the size of the fully connected layer. In a FCN different sizes does not matter.
+The 1x1 concolution is used in Fully Convolutional Networks (FCN). The scenario here is not to determine if a handwritten digit is an A or B but to determine where in the image this handwritten digit is placed. So we need to preserve also spatial information. Here comes 1x1 convolutions into place. These layers keeps informations about spatical characteristics. A side effect is that the image size does not matter.
 
 
 #### Image manipulation
+Here i want to give a brief overview about reasons for encoding / decoding images. Decoding images is used to share weights so that the Neural Network does not need to learn about e.g. objects in the right corner or left corner. With sharing weights a network does learn about the object at all. Sharing weights and resizing the image on width, height and depth lead learning abouts lines, cricles then in next level alearning about shapes and in the next level learning about combination of shapes and so on.  Decoding is used to to perform semantic segmentation meaning a picture will be divided into areas that are linked together. For e.g. on self driving car image processing we need to know about signs, pedestrians objects in an image. Semantic segmentation allows to Neural Net to divide the image into related segments. So we need to preserve spatial data about the object so that the network detects a pedestrian no matter where it is or how far it is away.
+
 
 #### Limitations to the neural network
+My network has limitations so that it cannot be applied on other objects. First of all it is mainly trained on persons in an environment and especially the target person (which is to follow). This could not be extended to follow a dog out of the box. I would need to train the network the target dog from many different angles, distances in crowds and so on. 
+One apporach would be to extend teh input training data to many other objects but this would in lead to a more complex model. Networks tend to overfit on complex models with less training datat and tend to underfit with a huge amount of data and not that complex model. So extending this to other objects would resulst in much more training data and a deeper model having several more encoder and decoder layers to handle the huge amount of input data.
 
 
 
