@@ -1,4 +1,7 @@
 *.app
+data/train_combined
+data/sample_evaluation_data
+data/validation
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
