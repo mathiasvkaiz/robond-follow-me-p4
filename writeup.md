@@ -34,9 +34,9 @@ The goals / steps of this project are the following:
 #### Submission includes all required files and can be used to run the simulator in autonomous mode
 
 My project includes the following files:
-* model_training.ipynb containing all relevant code to create and train the model
-* config_model_weights containing the configuration of the model
-* model_weights containing a trained convolution neural network 
+* code/model_training.ipynb - containing all relevant code to create and train the model
+* data/weights/config_model_weights - containing the configuration of the model
+* data/weights/model_weights - containing a trained convolution neural network 
 * writeup.md or writeup report summarizing the results
 
 #### Submission includes functional code
