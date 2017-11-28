@@ -116,8 +116,18 @@ Here i want to give a brief overview about reasons for encoding / decoding image
 
 #### Limitations to the neural network
 My network has limitations so that it cannot be applied on other objects. First of all it is mainly trained on persons in an environment and especially the target person (which is to follow). This could not be extended to follow a dog out of the box. I would need to train the network the target dog from many different angles, distances in crowds and so on. 
-One apporach would be to extend teh input training data to many other objects but this would in lead to a more complex model. Networks tend to overfit on complex models with less training datat and tend to underfit with a huge amount of data and not that complex model. So extending this to other objects would resulst in much more training data and a deeper model having several more encoder and decoder layers to handle the huge amount of input data.
+One apporach would be to extend the input training data to many other objects but this would in lead to a more complex model. Networks tend to overfit on complex models with less training datat and tend to underfit with a huge amount of data and not that complex model. So extending this to other objects would resulst in much more training data and a deeper model having several more encoder and decoder layers to handle the huge amount of input data.
 
+
+#### Future Enhancements
+As i stated out earlier in this writeupe a future enhancemnet would be to get more training and validation data by using the simulator recording. This should include several scenarios:
+- Data gathered by following the hero in a very dense crowd.
+- Data gathered while in patrol directly over the hero, while they zigzag.
+- Data gathered while the quad is on standard patrol.
+
+Having more data available i could try to use a deeper network but this would not be a must. What gets clear in the score section is, that my model has issue identifying the correct person on long distances. So i should focus on this data collection scenario in special to get more test data for long distances. 
+
+To avoid the brute force hyperparameter finding i could use grid search. This technique allows my to found the best combination of parameters by performing multiple searchs (like a grid). Other apporaches could be like image augmentation so that images are randomly flipped  horizontally on the fly. This apprach let us get a wider range of test data.  Also a decaying learningn rate could be a good approach to increase performance and to avoid covergence of the network. 
 
 
 
